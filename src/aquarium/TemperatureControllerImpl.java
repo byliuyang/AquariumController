@@ -55,9 +55,6 @@ public final class TemperatureControllerImpl implements TemperatureController {
      * @param adjuster the TemperatureAdjuster
      */
     private TemperatureControllerImpl(TemperatureSensor sensor, TemperatureAdjuster adjuster) {
-        // TODO: Implement this. You may have your constructor(s) take arguments, but they should
-        //	be private so that the factory method, <code>makeController</code> is the only way to
-        // create an instance of this class for a client.
         this.sensor = sensor;
         this.sensor.addObserver(this.adjustTemperatureObserser);
         this.adjuster = adjuster;
@@ -74,8 +71,6 @@ public final class TemperatureControllerImpl implements TemperatureController {
      */
     static public TemperatureController makeTemperatureController(TemperatureSensor sensor,
                                                                   TemperatureAdjuster adjuster) {
-        // TODO: create an instance
-        
         TemperatureControllerImpl controller = new TemperatureControllerImpl(sensor, adjuster);
         controller.temperatureScale = CELSIUS;
         controller.desiredTemperature = 20;
@@ -88,7 +83,6 @@ public final class TemperatureControllerImpl implements TemperatureController {
      */
     @Override
     public void setTemperature(double temperature) {
-        // TODO Auto-generated method stub
         desiredTemperature = temperatureScale == CELSIUS ? temperature : fahrenheitToCelsius
                 (temperature);
         adjustTemperatureObserser.apply(sensor.getTemperature());
@@ -99,7 +93,6 @@ public final class TemperatureControllerImpl implements TemperatureController {
      */
     @Override
     public double getCurrentTemperature() {
-        // TODO Auto-generated method stub
         double currTemp = sensor.getTemperature();
         return temperatureScale == CELSIUS ? currTemp : celsiusToFahrenheit(currTemp);
     }
@@ -109,7 +102,6 @@ public final class TemperatureControllerImpl implements TemperatureController {
      */
     @Override
     public double getAcceptableVariation() {
-        // TODO Auto-generated method stub
         return temperatureScale == CELSIUS ? temperatureVariance : celsiusToFahrenheitVariance
                 (temperatureVariance);
     }
@@ -119,7 +111,6 @@ public final class TemperatureControllerImpl implements TemperatureController {
      */
     @Override
     public void setAcceptableVariation(double variance) {
-        // TODO Auto-generated method stub
         temperatureVariance = temperatureScale == CELSIUS ? variance :
                               fahrenheitToCelsiusVariance(variance);
         adjustTemperatureObserser.apply(sensor.getTemperature());
@@ -130,7 +121,6 @@ public final class TemperatureControllerImpl implements TemperatureController {
      */
     @Override
     public TemperatureScale getTemperatureScale() {
-        // TODO Auto-generated method stub
         return temperatureScale;
     }
     
@@ -140,7 +130,6 @@ public final class TemperatureControllerImpl implements TemperatureController {
      */
     @Override
     public void setTemperatureScale(TemperatureScale newTemperatureScale) {
-        // TODO Auto-generated method stub
         temperatureScale = newTemperatureScale;
     }
 }

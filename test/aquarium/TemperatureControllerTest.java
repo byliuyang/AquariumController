@@ -61,7 +61,7 @@ public class TemperatureControllerTest {
         assertEquals(1.0, controller.getAcceptableVariation(), 0.0);
     }
     
-    // Initialize temperature controller tests
+    // Tests for initialize temperature controller 
     
     @Test
     public void temperatureDesired() {
@@ -92,7 +92,7 @@ public class TemperatureControllerTest {
         sensor.setTemperature(23.0);
     }
     
-    // Set desired temperature tests
+    // Tests for set desired temperature 
     
     @Test
     public void setDesiredTemperatureTo22() {
@@ -324,7 +324,7 @@ public class TemperatureControllerTest {
     // Tests for water temperature goes out of acceptable variance from desired temperature
     
     @Test
-    public void waterTemperatureOutOfDesired() {
+    public void waterTemperatureOutOfDesiredHigher() {
         sensor.setTemperature(20.0);
         
         controller = TemperatureControllerImpl.makeTemperatureController(sensor, adjuster);
@@ -340,7 +340,34 @@ public class TemperatureControllerTest {
         sensor.setTemperature(26);
     }
     
+    @Test
+    public void waterTemperatureOutOfDesiredLower() {
+        sensor.setTemperature(20.0);
+        
+        controller = TemperatureControllerImpl.makeTemperatureController(sensor, adjuster);
+        
+        assertEquals(OFF, adjuster.getState());
+        controller.setAcceptableVariation(2);
+        desireTemperatures.add(22.0);
+        controller.setTemperature(desireTemperatures.peek());
+        
+        expectedStates.add(HEATING);
+        expectedStates.add(OFF);
+        adjuster.addObserver(assertTempAndState(expectedStates, desireTemperatures));
+        sensor.setTemperature(18);
+    }
+    
     // Test Helpers
+    
+    /**
+     * Return a function which changes to new desired temperature when reaching certain water 
+     * temperature
+     * 
+     * @param switchPoints List of water temperature switch points
+     * @param variance Acceptable variance of water temperature
+     * 
+     * @return null
+     */
     private Function<Double, Void> switchTemperature(Queue<Double> switchPoints, double variance) {
         return (Double temperature) -> {
             if (stateChanged && isInDesiredVariance(temperature, switchPoints.peek(), variance)
@@ -370,6 +397,15 @@ public class TemperatureControllerTest {
         };
     }
     
+    /**
+     * Return a function which changes to new temperature scale when reaching certain water 
+     * temperature
+     * 
+     * @param switchPoints List of water temperature switch points
+     * 
+     * @return a function which changes to new temperature scale when reaching certain water 
+     * temperature
+     */
     private Function<Double, Void> switchScale(Queue<Double> switchPoints) {
         return (Double temperature) -> {
             if (stateChanged && isInDesiredVariance(controller.getCurrentTemperature(),
@@ -384,7 +420,16 @@ public class TemperatureControllerTest {
         };
     }
     
-    
+    /**
+     * Return a function which asserts adjuster reaching sequence of expected states and 
+     * sequence of desired temperature 
+     * 
+     * @param expectedStates Sequence of expected adjuster states
+     * @param desireTemperatures Sequence of desired water temperature
+     * 
+     * @return Return a function which asserts adjuster reaching sequence of expected states and 
+     * sequence of desired temperature 
+     */
     private Function<AdjusterState, Void> assertTempAndState(Queue<AdjusterState> expectedStates,
                                                              Queue<Double> desireTemperatures) {
         return (AdjusterState state) -> {
@@ -402,6 +447,16 @@ public class TemperatureControllerTest {
         };
     }
     
+    /**
+     * Return true when a temperature is in acceptable variance of desired temperature, false 
+     * otherwise
+     * 
+     * @param temperature The temperature
+     * @param desiredTemperature The desired temperature
+     * @param variance The acceptable variance of desired temperature
+     * 
+     * @return true when a temperature is in variation of desired temperature, false otherwise
+     */
     private boolean isInDesiredVariance(double temperature, double desiredTemperature, double
             variance) {
         double diff = temperature - desiredTemperature;

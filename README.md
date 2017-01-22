@@ -1,7 +1,5 @@
-
 Aquarium system
 ===
-
 The project implements the temperature controller for Aquarium system. 
 It monitors the water temperature and collaborates with a temperature adjuster mechanism that is able to heat or cool the water.
 
@@ -42,5 +40,4 @@ Date: Jan 21, 2017
 
 Acknowledgement
 ---
-
 Starter from Prof. Gary Pollice at Worcester Polytechnic Institute 

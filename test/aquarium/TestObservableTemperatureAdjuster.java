@@ -71,6 +71,10 @@ public class TestObservableTemperatureAdjuster implements TemperatureAdjuster {
         this.delta = Math.abs(delta);
     }
     
+    /**
+     * Set the state of adjuster
+     * @param newState The new state of adjuster
+     */
     public void setState(AdjusterState newState) {
         if (newState != this.state) {
             this.state = newState;

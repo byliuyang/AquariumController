@@ -6,7 +6,9 @@ package aquarium;
 public class Utility {
     /**
      * Convert Celsius temperature to corresponding Fahrenheit temperature
+     * 
      * @param c The source Celsius temperature in degree
+     * 
      * @return the corresponding Fahrenheit temperature in degree
      */
     public static double celsiusToFahrenheit(double c) {
@@ -15,7 +17,9 @@ public class Utility {
     
     /**
      * Convert Fahrenheit temperature to corresponding Celsius temperature
+     * 
      * @param f The source Fahrenheit temperature in degree
+     * 
      * @return the corresponding Celsius temperature in degree
      */
     public static double fahrenheitToCelsius(double f) {
@@ -24,7 +28,9 @@ public class Utility {
     
     /**
      * Convert Celsius temperature variation to corresponding Fahrenheit temperature variation
+     * 
      * @param c The source Celsius temperature variation in degree
+     * 
      * @return the corresponding Fahrenheit temperature variation in degree
      */
     public static double celsiusToFahrenheitVariance(double c) {
@@ -33,7 +39,9 @@ public class Utility {
     
     /**
      * Convert Fahrenheit temperature variation to corresponding Celsius temperature variation
+     * 
      * @param f The source Fahrenheit temperature variation in degree
+     * 
      * @return the corresponding Celsius temperature variation in degree
      */
     public static double fahrenheitToCelsiusVariance(double f) {
